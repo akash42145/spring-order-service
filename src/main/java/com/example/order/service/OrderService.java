@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -33,11 +34,16 @@ public class OrderService {
 	private WebClient.Builder webClientBuilder;
 	
 	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 
+	@Transactional
 	public Order placeOrder(int userId, int productId) {
+		
+		Product product = this.getProduct(productId);
 
 		productClient.changeInventory(productId, -1);
+		
+		userClient.updateCustomerCredits(userId, product.getPrice());
 
 		return orderRepository.save(new Order(userId, productId, Status.CREATED));
 	}
@@ -66,7 +72,7 @@ public class OrderService {
 		  String customerOwner = restTemplate.exchange("http://spring-user-service/customer/owner",
 	                HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}).getBody();
 		  
-		  String productOwner = restTemplate.exchange("http://spring-product-service/customer/owner",
+		  String productOwner = restTemplate.exchange("http://spring-product-service/product/owner",
 	                HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}).getBody();
 		
 		

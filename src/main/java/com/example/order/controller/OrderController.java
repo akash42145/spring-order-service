@@ -11,8 +11,6 @@ import com.example.order.model.Order;
 import com.example.order.model.Product;
 import com.example.order.service.OrderService;
 
-import reactor.core.publisher.Mono;
-
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -26,13 +24,13 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/getUser")
+	@GetMapping("/getUser/{userId}")
 	public Customer getUser(@PathVariable int userId) {
 		return orderService.getUser(userId);
 		
 	}
 	
-	@GetMapping("/getProduct")
+	@GetMapping("/getProduct/{productId}")
 	public Product getProduct(@PathVariable int productId) {
 		return orderService.getProduct(productId);
 		

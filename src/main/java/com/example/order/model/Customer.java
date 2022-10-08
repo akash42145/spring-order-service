@@ -6,7 +6,7 @@ public class Customer {
 	private String name;
 	private String email;
 	private long phone;
-	private long credits;
+	private double credits;
 	
 	public Customer(int id, String name, String email, long phone, long credits) {
 		this.id= id;
@@ -53,11 +53,11 @@ public class Customer {
 		this.phone = phone;
 	}
 
-	public long getCredits() {
+	public double getCredits() {
 		return credits;
 	}
 
-	public void setCredits(long credits) {
+	public void setCredits(double credits) {
 		this.credits = credits;
 	}	
 

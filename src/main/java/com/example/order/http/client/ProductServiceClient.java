@@ -14,7 +14,7 @@ public interface ProductServiceClient {
 	@GetMapping("/product/{id}")
 	Product getProduct(@PathVariable int id);
 	
-	@GetMapping("/product/change-inventory/{id}")
+	@GetMapping("/product/change-inventory/{id}?count={count}")
 	public String changeInventory(@PathVariable int id, @RequestParam int count);
 	
 	@GetMapping("/product/owner")
